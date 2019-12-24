@@ -1,5 +1,9 @@
 package labors.labor02;
 
+/**
+ * @author LeeKrane
+ */
+
 /* public */ class Rectangle {
 	private double length = 1.0;
 	private double width = 1.0;

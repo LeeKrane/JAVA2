@@ -1,8 +1,11 @@
 package labors.labor03;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+/**
+ * @author LeeKrane
+ */
 
 public class PotionTest {
 	private static Ingredient testIngredient1 = new Ingredient("testIngredient1");

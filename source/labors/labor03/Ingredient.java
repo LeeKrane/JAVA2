@@ -1,5 +1,9 @@
 package labors.labor03;
 
+/**
+ * @author LeeKrane
+ */
+
 public class Ingredient {
 	private String ingredientName;
 	

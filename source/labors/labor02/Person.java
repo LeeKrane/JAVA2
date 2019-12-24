@@ -2,6 +2,10 @@ package labors.labor02;
 
 import java.time.LocalDate;
 
+/**
+ * @author LeeKrane
+ */
+
 public class Person {
 	private String firstName;
 	private String name;

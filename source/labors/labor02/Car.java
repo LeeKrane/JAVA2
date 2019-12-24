@@ -1,5 +1,9 @@
 package labors.labor02;
 
+/**
+ * @author LeeKrane
+ */
+
 public class Car {
 	private String type;
 	private boolean engineActive;

@@ -1,6 +1,8 @@
 package labors.labor04;
 
-import java.util.Arrays;
+/**
+ * @author LeeKrane
+ */
 
 public class PortalCrane {
 	/* private */ int[] silos;

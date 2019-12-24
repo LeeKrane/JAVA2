@@ -1,5 +1,9 @@
 package labors.labor03;
 
+/**
+ * @author LeeKrane
+ */
+
 public class Potion {
 	private Ingredient firstIngredient;
 	private Ingredient secondIngredient;
