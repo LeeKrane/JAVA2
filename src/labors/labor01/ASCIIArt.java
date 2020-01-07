@@ -9,10 +9,12 @@ import java.util.Scanner;
  */
 
 public class ASCIIArt {
+	
 	public static void main (String[] args) {
-		checkFile("resources/labors/labor01/bild1.ascii");
-		checkFile("resources/labors/labor01/bild2.ascii");
-		checkFile("resources/labors/labor01/bild3.ascii");
+		String resourcePath = "res/labors/labor01/";
+		checkFile(resourcePath + "bild1.ascii");
+		checkFile(resourcePath + "bild2.ascii");
+		checkFile(resourcePath + "bild3.ascii");
 	}
 	
 	private static void checkFile (String filePath) {

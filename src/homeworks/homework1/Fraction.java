@@ -32,20 +32,20 @@ public class Fraction {
 	 * This constructor creates a new Fraction object from the given numerator and the given denominator.
 	 * @param numerator The numerator for the new Fraction object.
 	 * @param denominator The denominator for the new Fraction object.
-	 * @throws FractionException Throws if the denominator is 0.
+	 * @throws IllegalArgumentException Throws if the denominator is 0.
 	 */
-	Fraction (long numerator, long denominator) throws FractionException {
+	Fraction (long numerator, long denominator) {
 		setFraction(numerator, denominator);
 	}
 	
 	/**
 	 * This constructor creates a new Fraction object from the given fraction string.
 	 * @param fraction The string which contains the numerator and the denominator, or a decimal value for the new Fraction object.
-	 * @throws FractionException Throws if the denominator is 0.
+	 * @throws IllegalArgumentException Throws if the denominator is 0.
 	 */
-	Fraction (String fraction) throws FractionException {
+	Fraction (String fraction) {
 		if (!fraction.matches("-?\\d+(/-?\\d+|.\\d+)?"))
-			throw new FractionException("The given string does not contain a legal fraction.");
+			throw new IllegalArgumentException("The given string does not contain a legal fraction.");
 		String[] tokens = fraction.split("/");
 		switch (tokens.length) {
 			case 1:
@@ -68,11 +68,11 @@ public class Fraction {
 	 * This method creates a new Fraction object which is the sum of the this object and the given Fraction object and returns it.
 	 * @param fraction The Fraction object which is added to the this object in a new sum Fraction object (the this object is not modified).
 	 * @return The sum of the this object and the given Fraction object as new Fraction object.
-	 * @throws FractionException Throws if the given Fraction object is null.
+	 * @throws IllegalArgumentException Throws if the given Fraction object is null.
 	 */
-	Fraction add (Fraction fraction) throws FractionException {
+	Fraction add (Fraction fraction) {
 		if (fraction == null)
-			throw new FractionException("The fraction to add must not be null.");
+			throw new IllegalArgumentException("The fraction to add must not be null.");
 		Fraction copy = this.copy();
 		copy.addThis(fraction);
 		return copy;
@@ -95,11 +95,11 @@ public class Fraction {
 	 * This method creates a new Fraction object which is the difference of the this object and the given Fraction object and returns it.
 	 * @param fraction The Fraction object which is subtracted from the this object in a new difference Fraction object (the this object is not modified).
 	 * @return The difference of the this object and the given Fraction object as new Fraction object.
-	 * @throws FractionException Throws if the given Fraction object is null.
+	 * @throws IllegalArgumentException Throws if the given Fraction object is null.
 	 */
-	Fraction sub (Fraction fraction) throws FractionException {
+	Fraction sub (Fraction fraction) {
 		if (fraction == null)
-			throw new FractionException("The fraction to subtract must not be null.");
+			throw new IllegalArgumentException("The fraction to subtract must not be null.");
 		Fraction copy = this.copy();
 		copy.subThis(fraction);
 		return copy;
@@ -122,13 +122,13 @@ public class Fraction {
 	 * This method creates a new Fraction object which is the product of the this object and the given Fraction object and returns it.
 	 * @param fraction The Fraction object which the this object is multiplied by in a new product Fraction object (the this object is not modified).
 	 * @return The product of the this object and the given Fraction object as new Fraction object.
-	 * @throws FractionException Throws if the given Fraction object is null or it's denominator is 0.
+	 * @throws IllegalArgumentException Throws if the given Fraction object is null or it's denominator is 0.
 	 */
-	Fraction mul (Fraction fraction) throws FractionException {
+	Fraction mul (Fraction fraction) {
 		if (fraction == null)
-			throw new FractionException("The fraction to multiply with must not be null.");
+			throw new IllegalArgumentException("The fraction to multiply with must not be null.");
 		if (fraction.denominator == 0)
-			throw new FractionException("The fraction to multiply with must not have the denominator 0.");
+			throw new IllegalArgumentException("The fraction to multiply with must not have the denominator 0.");
 		Fraction copy = this.copy();
 		copy.mulThis(fraction);
 		return copy;
@@ -150,13 +150,13 @@ public class Fraction {
 	 * This method creates a new Fraction object which is the quotient of the this object and the given Fraction object and returns it.
 	 * @param fraction The Fraction object which the this object is divided by in a new quotient Fraction object (the this object is not modified).
 	 * @return The quotient of the this object and the given Fraction object as new Fraction object.
-	 * @throws FractionException Throws if the given Fraction object is null or it's numerator is 0.
+	 * @throws IllegalArgumentException Throws if the given Fraction object is null or it's numerator is 0.
 	 */
-	Fraction div (Fraction fraction) throws FractionException {
+	Fraction div (Fraction fraction) {
 		if (fraction == null)
-			throw new FractionException("The fraction to divide by must not be null.");
+			throw new IllegalArgumentException("The fraction to divide by must not be null.");
 		if (fraction.numerator == 0)
-			throw new FractionException("The fraction to divide by must not have the numerator 0.");
+			throw new IllegalArgumentException("The fraction to divide by must not have the numerator 0.");
 		Fraction copy = this.copy();
 		copy.divThis(fraction);
 		return copy;
@@ -165,12 +165,12 @@ public class Fraction {
 	/**
 	 * This method divides the this object by the given Fraction object.
 	 * @param fraction The Fraction object which the this object is divided by.
-	 * @throws FractionException Throws if the numerator of the given Fraction object is 0.
+	 * @throws IllegalArgumentException Throws if the numerator of the given Fraction object is 0.
 	 */
-	void divThis (Fraction fraction) throws FractionException {
+	void divThis (Fraction fraction) {
 		if (fraction != null) {
 			if (fraction.numerator == 0)
-				throw new FractionException("The fraction to divide by must not have the numerator 0.");
+				throw new IllegalArgumentException("The fraction to divide by must not have the numerator 0.");
 			numerator *= fraction.denominator;
 			denominator *= fraction.numerator;
 			simplify();
@@ -182,7 +182,7 @@ public class Fraction {
 	 * @param exponent The exponent which the this object is raised to the power of in a new power Fraction object (the this object is not modified).
 	 * @return The power of the this object to the given exponent as new Fraction object.
 	 */
-	Fraction pow (int exponent) throws FractionException {
+	Fraction pow (int exponent) {
 		Fraction copy = this.copy();
 		copy.powThis(exponent);
 		return copy;
@@ -191,11 +191,11 @@ public class Fraction {
 	/**
 	 * This method divides the this object by the given Fraction object.
 	 * @param exponent The exponent which the this object is raised to the power of.
-	 * @throws FractionException Throws if the numerator of the given Fraction object is 0 and the exponent is negative.
+	 * @throws IllegalArgumentException Throws if the numerator of the given Fraction object is 0 and the exponent is negative.
 	 */
-	void powThis (int exponent) throws FractionException {
+	void powThis (int exponent) {
 		if (numerator == 0 && exponent < 0)
-			throw new FractionException("Can not take 0 to a negative power.");
+			throw new IllegalArgumentException("Can not take 0 to a negative power.");
 		if (exponent < 0) {
 			long orgNum = numerator;
 			numerator = (long) Math.pow(denominator, -exponent);
@@ -249,7 +249,7 @@ public class Fraction {
 	 * This method creates an exact copy of the this Faction object and returns it.
 	 * @return An exact copy of the this Faction object.
 	 */
-	private Fraction copy () throws FractionException {
+	private Fraction copy () {
 		return new Fraction(numerator, denominator);
 	}
 	
@@ -273,11 +273,11 @@ public class Fraction {
 	 * This method sets the numerator to the given numerator and the denominator to the given denominator.
 	 * @param numerator The new value of the numerator.
 	 * @param denominator The new value of the denominator.
-	 * @throws FractionException Throws if the denominator is 0.
+	 * @throws IllegalArgumentException Throws if the denominator is 0.
 	 */
-	private void setFraction (long numerator, long denominator) throws FractionException {
+	private void setFraction (long numerator, long denominator) {
 		if (denominator == 0)
-			throw new FractionException("The denominator must not be 0.");
+			throw new IllegalArgumentException("The denominator must not be 0.");
 		this.numerator = numerator;
 		this.denominator = denominator;
 	}
@@ -316,11 +316,5 @@ public class Fraction {
 	@Override
 	public int hashCode () {
 		return Objects.hash(numerator, denominator);
-	}
-}
-
-class FractionException extends Exception {
-	public FractionException (String message) {
-		super(message);
 	}
 }
