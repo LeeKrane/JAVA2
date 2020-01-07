@@ -44,7 +44,7 @@ public class Fraction {
 	 * @throws IllegalArgumentException Throws if the denominator is 0.
 	 */
 	Fraction (String fraction) {
-		if (!fraction.matches("-?\\d+(/-?\\d+|.\\d+)?"))
+		if (!fraction.matches("(-?\\d+/\\d+)|(-?\\d*\\.\\d+)|(-?\\d+)")) // -?\d+(/-?\d+|\.\d+)?
 			throw new IllegalArgumentException("The given string does not contain a legal fraction.");
 		String[] tokens = fraction.split("/");
 		switch (tokens.length) {
@@ -228,6 +228,8 @@ public class Fraction {
 	 * @return The determined greatest common factor of the two given values.
 	 */
 	static long greatestCommonFactor (long a, long b) {
+		if (a == 0 && b == 0)
+			throw new IllegalArgumentException("There is no greatest common factor for 0 and 0.");
 		a = Math.abs(a);
 		b = Math.abs(b);
 		return b == 0 ? a : greatestCommonFactor(b, a % b);
@@ -311,6 +313,14 @@ public class Fraction {
 		fraction.simplify();
 		return numerator == fraction.numerator &&
 				denominator == fraction.denominator;
+	}
+	
+	long getNumerator () {
+		return numerator;
+	}
+	
+	long getDenominator () {
+		return denominator;
 	}
 	
 	@Override
