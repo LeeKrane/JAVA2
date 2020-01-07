@@ -257,7 +257,7 @@ public class Fraction {
 	 * This method sets whether all Factions are being output as faction or as decimal value.
 	 * @param fractionFormat Whether all Factions are being output as faction (true) or as decimal value (false).
 	 */
-	public static void setFractionFormat (boolean fractionFormat) {
+	static void setFractionFormat (boolean fractionFormat) {
 		Fraction.fractionFormat = fractionFormat;
 	}
 	
@@ -265,7 +265,7 @@ public class Fraction {
 	 * This method returns whether all Factions are being output as faction or as decimal value.
 	 * @return Whether all Factions are being output as faction or as decimal value.
 	 */
-	public static boolean isFractionFormat () {
+	static boolean isFractionFormat () {
 		return fractionFormat;
 	}
 	
