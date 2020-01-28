@@ -64,7 +64,7 @@ public class LinkedList {
      */
     public void add (Object data, int idx) {
         if (idx > size || idx < 0)
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Invalid index: " + idx);
         ListNode node = new ListNode(data);
         if (size == 0)
             first = last = node;
@@ -93,7 +93,33 @@ public class LinkedList {
      * @return gespeicherter Datensatz
      */
     public Object remove (int idx) {
-        throw new UnsupportedOperationException();
+        if (size == 0 || idx < 0 || idx >= size)
+            throw new IndexOutOfBoundsException("Invalid index: " + idx);
+        Object del;
+        if (size == 1) {
+            del = first.getData();
+            first = last = null;
+        }
+        else if (idx == 0) {
+            del = first.getData();
+            first = first.getNext();
+        }
+        else if (idx == size - 1) {
+            ListNode current = first;
+            for (int i = 0; i < size - 2; i++)
+                current = current.getNext();
+            del = current.getNext().getData();
+            last = current;
+        }
+        else {
+            ListNode current = first;
+            for (int i = 0; i < idx - 1; i++)
+                current = current.getNext();
+            del = current.getNext().getData();
+            current.setNext(current.getNext().getNext());
+        }
+        size--;
+        return del;
     }
     
     /**
@@ -102,17 +128,48 @@ public class LinkedList {
      * @param data zu entfernender Datensatz
      */
     public void removeAll (Object data) {
-        first = null;
-        last = null;
+        if (size == 1)
+            first = last = null;
+        if (size > 2) {
+            ListNode current = first;
+            while (data.equals(current.getData())) {
+                if (current.getNext() == last) {
+                    first = last;
+                    size = 1;
+                    break;
+                }
+                else {
+                    current = current.getNext();
+                    first = current;
+                    size--;
+                }
+            }
+            while (current != last && current.getNext() != last) {
+                if (data.equals(current.getNext().getData())) {
+                    current.setNext(current.getNext().getNext());
+                    size--;
+                }
+                current = current.getNext();
+            }
+            if (data.equals(last.getData())) {
+                last = current;
+                last.setNext(null);
+                size--;
+            }
+        }
     }
     
     @Override
     public String toString () {
-        return "LinkedList{" +
-                "first=" + first +
-                ", last=" + last +
-                ", size=" + size +
-                '}';
+        if (size == 0)
+            return "{ }";
+        StringBuilder builder = new StringBuilder("{").append(first.getData());
+        ListNode current = first.getNext();
+        for (int i = 1; i < size; i++) {
+            builder.append(", ").append(current.getData());
+            current = current.getNext();
+        }
+        return builder.append("}").toString();
     }
     
     /**
@@ -122,18 +179,12 @@ public class LinkedList {
      * @return gespeicherter Datensatz am Index {@code idx}
      */
     public Object get (int idx) {
-        /*
-        if (first == null)
-            throw new NullPointerException();
-        if (idx == 0)
-            return first;
+        if (idx < 0 || idx >= size)
+            throw new IndexOutOfBoundsException();
         ListNode current = first;
         for (int i = 0; i < idx; i++)
             current = current.getNext();
-        return current;
-        
-         */
-        throw new UnsupportedOperationException();
+        return current.getData();
     }
 }
 
