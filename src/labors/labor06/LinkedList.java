@@ -1,8 +1,10 @@
 package labors.labor06;
 
 /**
- * Eine einfach verkettete Liste.
+ * TODO: write class
+ * @author LeeKrane
  */
+
 public class LinkedList {
     private ListNode first;
     private ListNode last;
