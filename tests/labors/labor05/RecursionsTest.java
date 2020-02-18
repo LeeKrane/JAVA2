@@ -8,21 +8,20 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * TODO: make all tests parameterized
  * @author LeeKrane
  */
 
 public class RecursionsTest {
-	@Test
-	public void reciprocalTest () {
-		for (int i = 1, j = 1; i < 187; i++, j *= -1)
-			assertEquals(i * j, Recursions.reciprocal(i));
+	@ParameterizedTest
+	@CsvSource({"1,1", "-2,2", "3,3", "69,69", "-72,72", "109,109", "-112,112", "-128,128", "-142,142", "187,187", "-420,420"})
+	public void reciprocalTest (int i, int j) {
+		assertEquals(i, Recursions.reciprocal(j));
 	}
 	
-	@Test
-	public void reciprocalRecursiveTest () {
-		for (int i = 1, j = 1; i < 187; i++, j *= -1)
-			assertEquals(i * j, Recursions.reciprocalRecursive(i));
+	@ParameterizedTest
+	@CsvSource({"1,1", "-2,2", "3,3", "69,69", "-72,72", "109,109", "-112,112", "-128,128", "-142,142", "187,187", "-420,420"})
+	public void reciprocalRecursiveTest (int i, int j) {
+		assertEquals(i, Recursions.reciprocalRecursive(j));
 	}
 	
 	@ParameterizedTest
