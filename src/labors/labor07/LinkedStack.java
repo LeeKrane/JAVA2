@@ -22,6 +22,8 @@ public class LinkedStack {
 	}
 	
 	Object pop() {
+		if (isEmpty())
+			return null;
 		Object ret = topOfStack.getElement();
 		topOfStack = topOfStack.getNext();
 		size--;
@@ -37,6 +39,8 @@ public class LinkedStack {
 	}
 	
 	Object element() {
+		if (isEmpty())
+			return null;
 		return topOfStack.getElement();
 	}
 	
@@ -49,28 +53,5 @@ public class LinkedStack {
 			node = node.getNext();
 		}
 		return builder.toString();
-	}
-}
-
-class Node {
-	private Object element;
-	private Node next;
-	
-	public Node (Object element, Node next) {
-		this.element = element;
-		this.next = next;
-	}
-	
-	public Object getElement () {
-		return element;
-	}
-	
-	public Node getNext () {
-		return next;
-	}
-	
-	@Override
-	public String toString () {
-		return element.toString();
 	}
 }

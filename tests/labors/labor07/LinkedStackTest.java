@@ -37,6 +37,18 @@ class LinkedStackTest {
 	}
 	
 	@Test
+	void pop_emptyStack_noExceptionThrown () {
+		assertDoesNotThrow(new LinkedStack()::pop);
+	}
+	
+	@Test
+	void pop_emptyStack_correctSizeHandling () {
+		LinkedStack emptyStack = new LinkedStack();
+		emptyStack.pop();
+		assertEquals(0, emptyStack.size());
+	}
+	
+	@Test
 	void isEmpty_filledStack_correctDeterminationOfEmptiness () {
 		assertFalse(stack.isEmpty());
 		stack.pop();
@@ -60,10 +72,5 @@ class LinkedStackTest {
 		assertEquals(3, stack.size());
 		assertEquals(3, stack.element());
 		assertEquals(3, stack.size());
-	}
-	
-	@Test
-	void toString_filledStack_correctOutput () {
-		assertEquals("3\n2\n1\n", stack.toString());
 	}
 }
