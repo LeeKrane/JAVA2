@@ -19,6 +19,7 @@ public class LinkedQueue {
 		return size;
 	}
 	
+	@SuppressWarnings({"UnusedReturnValue", "SameReturnValue"})
 	boolean add (Object object) {
 		Node node = new Node(object, null);
 		if (isEmpty())

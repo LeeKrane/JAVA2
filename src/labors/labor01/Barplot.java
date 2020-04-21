@@ -4,12 +4,10 @@ package labors.labor01;
  * @author LeeKrane
  */
 
+@SuppressWarnings("SameParameterValue")
 public class Barplot {
 	static String repeat (char c, int n) {
-		StringBuilder repeatedCharacter = new StringBuilder();
-		for (int i = 0; i < n; i++)
-			repeatedCharacter.append(c);
-		return repeatedCharacter.toString();
+		return String.valueOf(c).repeat(Math.max(0, n));
 	}
 	
 	static String drawLabel (String label, int length) {

@@ -4,6 +4,7 @@ package labors.labor02;
  * @author LeeKrane
  */
 
+@SuppressWarnings("SameParameterValue")
 public class Car {
 	private String type;
 	private boolean engineActive;

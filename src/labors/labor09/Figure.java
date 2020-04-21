@@ -1,5 +1,6 @@
 package labors.labor09;
 
+@SuppressWarnings("unused")
 public abstract class Figure implements GeometricObject {
 	private double x;
 	private double y;

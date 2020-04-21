@@ -14,6 +14,7 @@ public class Fraction {
 	/**
 	 * This constructor creates a new Fraction object from the numerator 0 and the denominator 1.
 	 */
+	@SuppressWarnings("unused")
 	Fraction () {
 		numerator = 0;
 		denominator = 1;
@@ -60,6 +61,7 @@ public class Fraction {
 	 * This constructor creates a new Fraction object from the given value.
 	 * @param value The value for the new Fraction object.
 	 */
+	@SuppressWarnings("unused")
 	Fraction (double value) {
 		setFraction(value);
 	}
@@ -267,6 +269,7 @@ public class Fraction {
 	 * This method returns whether all Factions are being output as faction or as decimal value.
 	 * @return Whether all Factions are being output as faction or as decimal value.
 	 */
+	@SuppressWarnings("unused")
 	static boolean isFractionFormat () {
 		return fractionFormat;
 	}

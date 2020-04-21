@@ -6,24 +6,26 @@ import java.time.LocalDate;
  * @author LeeKrane
  */
 
+@SuppressWarnings("SameParameterValue")
 public class Person {
 	private String firstName;
 	private String name;
 	private int birthYear;
 	
+	@SuppressWarnings("unused")
 	public static void main (String[] args) {
-			Person p = new Person();
-			Person p1 = new Person(2000);
-			Person p2 = new Person("Maier", 1998);
-			Person p3 = new Person("Schmidt", "Franz", 1998);
-			p1.setName("Bauer");
-			p1.setFirstName("Hans");
-			p2.setFirstName("Eva");
-			System.out.println(p1 + " is " + p1.getAge() + " years old.");
-			if (p2.sameAge(p3))
-				System.out.println(p2 + " and " + p3 + " are the same age.");
-			if (Person.sameAge(p2, p3))
-				System . out . println ( p2 + " and " + p3 + " are the same age.");
+		Person p = new Person();
+		Person p1 = new Person(2000);
+		Person p2 = new Person("Maier", 1998);
+		Person p3 = new Person("Schmidt", "Franz", 1998);
+		p1.setName("Bauer");
+		p1.setFirstName("Hans");
+		p2.setFirstName("Eva");
+		System.out.println(p1 + " is " + p1.getAge() + " years old.");
+		if (p2.sameAge(p3))
+			System.out.println(p2 + " and " + p3 + " are the same age.");
+		if (Person.sameAge(p2, p3))
+			System.out.println(p2 + " and " + p3 + " are the same age.");
 	}
 	
 	private Person () {
