@@ -13,6 +13,42 @@ public class Date {
     private int month;
     private int year;
     
+    private boolean isValid () {
+        return isValid(toString());
+    }
+    
+    private boolean isValid (String dateString) {
+        String[] split = dateString.split("\\.");
+        
+        if (split.length != 3)
+            return false;
+        
+        int d = Integer.parseInt(split[0]);
+        int m = Integer.parseInt(split[1]);
+        int y = Integer.parseInt(split[2]);
+        
+        if (d < 1 || y < 1900 || y > 3000)
+            return false;
+        switch (m) {
+            case 1, 3, 5, 7, 8, 10, 12:
+                if (d > 31)
+                    return false;
+                break;
+            case 2:
+                if ((!isLeapYear(y) && d > 28) || d > 29)
+                    return false;
+                break;
+            case 4, 6, 9, 11:
+                if (d > 30)
+                    return false;
+                break;
+            default:
+                return false;
+        }
+        
+        return true;
+    }
+    
     private void reduceMonth () {
         month--;
         switch (month) {
@@ -51,9 +87,11 @@ public class Date {
      * @param dateString zu parsender String
      */
     public Date (String dateString) {
+        if (!isValid(dateString))
+            throw new IllegalArgumentException("The given date string is illegal.");
+        
         String[] split = dateString.split("\\.");
-        if (!dateString.matches("\\d{2}\\.\\d{2}\\.\\d{4}"))
-            throw new IllegalArgumentException();
+        
         day = Integer.parseInt(split[0]);
         month = Integer.parseInt(split[1]);
         year = Integer.parseInt(split[2]);
@@ -81,7 +119,7 @@ public class Date {
      */
     public Date (int day, int month, int year) {
         IllegalArgumentException e = new IllegalArgumentException("The given date is illegal.");
-        if (year < 1900 || year > 3000)
+        if (year < 1900 || year > 3000 || day < 1 || month < 1)
             throw e;
         
         switch (month) {
@@ -90,11 +128,14 @@ public class Date {
                     throw e;
                 break;
             case 2:
-                if ((isLeapYear(year) && day > 29) || day > 28)
+                if ((!isLeapYear(year) && day > 28) || day > 29)
                     throw e;
             case 4, 6, 9, 11:
                 if (day > 30)
                     throw e;
+                break;
+            default:
+                throw e;
         }
         
         this.day = day;
@@ -122,7 +163,7 @@ public class Date {
             }
         } else {
             while (d1.compareTo(d2) != 0) {
-                d1.addDays(1);
+                d2.addDays(1);
                 days--;
             }
         }
@@ -159,9 +200,9 @@ public class Date {
      */
     public String getMonthAsString () {
         return switch (month) {
-            case 1 -> "Jaenner";
+            case 1 -> "Januar";
             case 2 -> "Februar";
-            case 3 -> "Maerz";
+            case 3 -> "März";
             case 4 -> "April";
             case 5 -> "Mai";
             case 6 -> "Juni";
@@ -189,24 +230,30 @@ public class Date {
                 if (day == 0)
                     reduceMonth();
             }
-        } else {
-            for (int i = 0; i < days; i++) {
+            if (!isValid())
+                throw new IllegalArgumentException("The date is in an illegal state.");
+        } else if (days > 0) {
+            for (int i = days; i > 0; i--) {
+                day++;
                 switch (month) {
                     case 1, 3, 5, 7, 8, 10, 12:
-                        if (day == 31)
+                        if (day == 32)
                             increaseMonth();
                         break;
                     case 2:
-                        if ((day == 29 && isLeapYear(year)) || day == 28)
+                        if ((day == 29 && !isLeapYear(year)) || day == 30)
                             increaseMonth();
                         break;
                     case 4, 6, 9, 11:
-                        if (day == 30)
+                        if (day == 31)
                             increaseMonth();
-                    default:
-                        day++;
+                } if (month == 13) {
+                    year++;
+                    month = 1;
                 }
             }
+            if (!isValid())
+                throw new IllegalArgumentException("The date is in an illegal state.");
         }
     }
 
@@ -233,13 +280,13 @@ public class Date {
      */
     public String weekday () {
         return switch (weekdayNumber()) {
-            case 0 -> "Sonntag";
-            case 1 -> "Montag";
-            case 2 -> "Dienstag";
-            case 3 -> "Mittwoch";
-            case 4 -> "Donnerstag";
-            case 5 -> "Freitag";
-            case 6 -> "Samstag";
+            case 0 -> "Montag";
+            case 1 -> "Dienstag";
+            case 2 -> "Mittwoch";
+            case 3 -> "Donnerstag";
+            case 4 -> "Freitag";
+            case 5 -> "Samstag";
+            case 6 -> "Sonntag";
             default -> throw new IllegalArgumentException("This date is illegal.");
         };
     }
@@ -252,7 +299,19 @@ public class Date {
      * 0 bei gleichem Datum
      */
     public int compareTo (Date d) {
-        throw new UnsupportedOperationException("TODO");
+        if (this.equals(d))
+            return 0;
+        if (year == d.year && month == d.month) {
+            if (day > d.day)
+                return 1;
+            return -1;
+        } if (year == d.year) {
+            if (month > d.month)
+                return 1;
+            return -1;
+        } if (year > d.year)
+            return 1;
+        return -1;
     }
 
     /**
@@ -263,7 +322,7 @@ public class Date {
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("TODO");
+        return String.format("%02d.%02d.%04d", day, month, year);
     }
 
     /**
@@ -277,6 +336,12 @@ public class Date {
      * <code>Datum.FORMAT_US</code>
      */
     public String toString(int format) {
-        throw new UnsupportedOperationException("TODO");
+        return switch (format) {
+            case FORMAT_SHORT -> String.format("%02d.%02d.%02d", day, month, year % 100);
+            case FORMAT_NORMAL -> toString();
+            case FORMAT_LONG -> String.format("%02d.%s %04d, %s", day, getMonthAsString(), year, weekday());
+            case FORMAT_US -> String.format("%04d/%02d/%02d", year, day, month);
+            default -> throw new IllegalArgumentException("The given format is illegal.");
+        };
     }
 }
